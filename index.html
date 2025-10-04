@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="Luke" content="Also Luke" />
+  <title>Luke Site</title>
+  
+  <style>
+    /* CSS Reset - Based on Eric Meyer's reset */
+    html, body, div, span, applet, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    a, abbr, acronym, address, big, cite, code,
+    del, dfn, em, img, ins, kbd, q, s, samp,
+    small, strike, strong, sub, sup, tt, var,
+    b, u, i, center,
+    dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend,
+    table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, embed, 
+    figure, figcaption, footer, header, hgroup, 
+    menu, nav, output, ruby, section, summary,
+    time, mark, audio, video {
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    article, aside, details, figcaption, figure, 
+    footer, header, hgroup, menu, nav, section {
+      display: block;
+    }
+    body {
+      line-height: 1;
+    }
+    ol, ul {
+      list-style: none;
+    }
+    blockquote, q {
+      quotes: none;
+    }
+    blockquote:before, blockquote:after,
+    q:before, q:after {
+      content: '';
+      content: none;
+    }
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    /* Monospace Web Styles */
+    @import url('https://fonts.cdnfonts.com/css/jetbrains-mono-2');
+
+    :root {
+      --font-family: "JetBrains Mono", monospace;
+      --line-height: 1.20rem;
+      --border-thickness: 2px;
+      --text-color: #000;
+      --text-color-alt: #666;
+      --background-color: #fff;
+      --background-color-alt: #eee;
+
+      --font-weight-normal: 500;
+      --font-weight-medium: 600;
+      --font-weight-bold: 800;
+
+      font-family: var(--font-family);
+      font-optical-sizing: auto;
+      font-weight: var(--font-weight-normal);
+      font-style: normal;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-size: 16px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text-color: #fff;
+        --text-color-alt: #aaa;
+        --background-color: #3f3f3f;
+        --background-color-alt: #111;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    * + * {
+      margin-top: var(--line-height);
+    }
+
+    html {
+      display: flex;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      flex-direction: column;
+      align-items: center;
+      background: var(--background-color);
+      color: var(--text-color);
+    }
+
+    body {
+      position: relative;
+      width: 100%;
+      margin: 0;
+      padding: var(--line-height) 2ch;
+      max-width: calc(min(80ch, round(down, 100%, 1ch)));
+      line-height: var(--line-height);
+      overflow-x: hidden;
+    }
+
+    @media screen and (max-width: 480px) {
+      :root {
+        font-size: 14px;
+      }
+      body {
+        padding: var(--line-height) 1ch;
+      }
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: var(--font-weight-bold);
+      margin: calc(var(--line-height) * 2) 0 var(--line-height);
+      line-height: var(--line-height);
+    }
+
+    h1 {
+      font-size: 2rem;
+      line-height: calc(2 * var(--line-height));
+      margin-bottom: calc(var(--line-height) * 2);
+      text-transform: uppercase;
+    }
+    h2 {
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    hr {
+      position: relative;
+      display: block;
+      height: var(--line-height);
+      margin: calc(var(--line-height) * 1.5) 0;
+      border: none;
+      color: var(--text-color);
+    }
+    hr:after {
+      display: block;
+      content: "";
+      position: absolute;
+      top: calc(var(--line-height) / 2 - var(--border-thickness));
+      left: 0;
+      width: 100%;
+      border-top: calc(var(--border-thickness) * 3) double var(--text-color);
+      height: 0;
+    }
+
+    a {
+      text-decoration-thickness: var(--border-thickness);
+    }
+
+    a:link, a:visited {
+      color: var(--text-color);
+    }
+
+    p {
+      margin-bottom: var(--line-height);
+    }
+
+    strong {
+      font-weight: var(--font-weight-bold);
+    }
+    em {
+      font-style: italic;
+    }
+
+    table {
+      position: relative;
+      top: calc(var(--line-height) / 2);
+      width: calc(round(down, 100%, 1ch));
+      border-collapse: collapse;
+      margin: 0 0 calc(var(--line-height) * 2);
+    }
+
+    th, td {
+      border: var(--border-thickness) solid var(--text-color);
+      padding: 
+        calc((var(--line-height) / 2))
+        calc(1ch - var(--border-thickness) / 2)
+        calc((var(--line-height) / 2) - (var(--border-thickness)))
+      ;
+      line-height: var(--line-height);
+      vertical-align: top;
+      text-align: left;
+    }
+    table tbody tr:first-child > * {
+      padding-top: calc((var(--line-height) / 2) - var(--border-thickness));
+    }
+
+    th {
+      font-weight: 700;
+    }
+    .width-min {
+      width: 0%;
+    }
+    .width-auto {
+      width: 100%;
+    }
+
+    .header {
+      margin-bottom: calc(var(--line-height) * 2);
+    }
+    .header h1 {
+      margin: 0;
+    }
+    .header tr td:last-child {
+      text-align: right;
+    }
+
+    p {
+      word-break: break-word;
+      word-wrap: break-word;
+      hyphens: auto;
+    }
+
+    img, video {
+      display: block;
+      width: 100%;
+      object-fit: contain;
+      overflow: hidden;
+    }
+    img {
+      font-style: italic;
+      color: var(--text-color-alt);
+    }
+
+    details {
+      border: var(--border-thickness) solid var(--text-color);
+      padding: calc(var(--line-height) - var(--border-thickness)) 1ch;
+      margin-bottom: var(--line-height);
+    }
+
+    summary {
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+    }
+    details[open] summary {
+      margin-bottom: var(--line-height);
+    }
+
+    details ::marker {
+      display: inline-block;
+      content: '▶';
+      margin: 0;
+    }
+    details[open] ::marker {
+      content: '▼';
+    }
+
+    details :last-child {
+      margin-bottom: 0;
+    }
+
+    pre {
+      white-space: pre;
+      overflow-x: auto;
+      margin: var(--line-height) 0;
+      overflow-y: hidden;
+    }
+    figure pre {
+      margin: 0;
+    }
+
+    pre, code {
+      font-family: var(--font-family);
+    }
+
+    code {
+      font-weight: var(--font-weight-medium);
+    }
+
+    figure {
+      margin: calc(var(--line-height) * 2) 3ch;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    figcaption {
+      display: block;
+      font-style: italic;
+      margin-top: var(--line-height);
+    }
+
+    ul, ol {
+      padding: 0;
+      margin: 0 0 var(--line-height);
+    }
+
+    ul {
+      list-style-type: square;
+      padding: 0 0 0 2ch;
+    }
+    ol {
+      list-style-type: none;
+      counter-reset: item;
+      padding: 0;
+    }
+    ol ul,
+    ol ol,
+    ul ol,
+    ul ul {
+      padding: 0 0 0 3ch;
+      margin: 0;
+    }
+    ol li:before { 
+      content: counters(item, ".") ". ";
+      counter-increment: item;
+      font-weight: var(--font-weight-medium);
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+    }
+
+    li::marker {
+      line-height: 0;
+    }
+
+    input, button, textarea {
+      border: var(--border-thickness) solid var(--text-color);
+      padding: 
+        calc(var(--line-height) / 2 - var(--border-thickness))
+        calc(1ch - var(--border-thickness));
+      margin: 0;
+      font: inherit;
+      font-weight: inherit;
+      height: calc(var(--line-height) * 2);
+      width: auto;
+      overflow: visible;
+      background: var(--background-color);
+      color: var(--text-color);
+      line-height: normal;
+      -webkit-font-smoothing: inherit;
+      -moz-osx-font-smoothing: inherit;
+      -webkit-appearance: none;
+    }
+
+    input[type=checkbox],
+    input[type=radio] {
+      display: inline-grid;
+      place-content: center;
+      vertical-align: top;
+      width: 2ch;
+      height: var(--line-height);
+      cursor: pointer;
+    }
+    input[type=checkbox]:checked:before,
+    input[type=radio]:checked:before {
+      content: "";
+      width: 1ch;
+      height: calc(var(--line-height) / 2);
+      background: var(--text-color);
+    }
+    input[type=radio],
+    input[type=radio]:before {
+      border-radius: 100%;
+    }
+
+    button:focus, input:focus {
+      --border-thickness: 3px;
+      outline: none;
+    }
+
+    input {
+      width: calc(round(down, 100%, 1ch));
+    }
+    ::placeholder {
+      color: var(--text-color-alt);
+      opacity: 1;
+    }
+    ::-ms-input-placeholder {
+      color: var(--text-color-alt);
+    }
+    button::-moz-focus-inner {
+      padding: 0;
+      border: 0
+    }
+
+    button {
+      text-transform: uppercase;
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: var(--background-color-alt);
+    }
+    button:active {
+      transform: translate(2px, 2px);
+    }
+
+    label {
+      display: block;
+      width: calc(round(down, 100%, 1ch));
+      height: auto;
+      line-height: var(--line-height);
+      font-weight: var(--font-weight-medium);
+      margin: 0;
+    }
+
+    label input {
+      width: 100%;
+    }
+
+    .tree, .tree ul {
+      position: relative;
+      padding-left: 0;
+      list-style-type: none;
+      line-height: var(--line-height);
+    }
+    .tree ul {
+      margin: 0;
+    }
+    .tree ul li {
+      position: relative;
+      padding-left: 1.5ch;
+      margin-left: 1.5ch;
+      border-left: var(--border-thickness) solid var(--text-color);
+    }
+    .tree ul li:before {
+      position: absolute;
+      display: block;
+      top: calc(var(--line-height) / 2);
+      left: 0;
+      content: "";
+      width: 1ch;
+      border-bottom: var(--border-thickness) solid var(--text-color);
+    }
+    .tree ul li:last-child {
+      border-left: none;
+    }
+    .tree ul li:last-child:after {
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 0;
+      content: "";
+      height: calc(var(--line-height) / 2);
+      border-left: var(--border-thickness) solid var(--text-color);
+    }
+
+    .grid {
+      --grid-cells: 0;
+      display: flex;
+      gap: 1ch;
+      width: calc(round(down, 100%, (1ch * var(--grid-cells)) - (1ch * var(--grid-cells) - 1)));
+      margin-bottom: var(--line-height);
+    }
+
+    .grid > *,
+    .grid > input {
+      flex: 0 0 calc(round(down, (100% - (1ch * (var(--grid-cells) - 1))) / var(--grid-cells), 1ch));
+    }
+    .grid:has(> :last-child:nth-child(1)) { --grid-cells: 1; }
+    .grid:has(> :last-child:nth-child(2)) { --grid-cells: 2; }
+    .grid:has(> :last-child:nth-child(3)) { --grid-cells: 3; }
+    .grid:has(> :last-child:nth-child(4)) { --grid-cells: 4; }
+    .grid:has(> :last-child:nth-child(5)) { --grid-cells: 5; }
+    .grid:has(> :last-child:nth-child(6)) { --grid-cells: 6; }
+    .grid:has(> :last-child:nth-child(7)) { --grid-cells: 7; }
+    .grid:has(> :last-child:nth-child(8)) { --grid-cells: 8; }
+    .grid:has(> :last-child:nth-child(9)) { --grid-cells: 9; }
+
+    /* DEBUG UTILITIES */
+    .debug .debug-grid {
+      --color: color-mix(in srgb, var(--text-color) 10%, var(--background-color) 90%);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      background-image:
+        repeating-linear-gradient(var(--color) 0 1px, transparent 1px 100%),
+        repeating-linear-gradient(90deg, var(--color) 0 1px, transparent 1px 100%);
+      background-size: 1ch var(--line-height);
+      margin: 0;
+    }
+
+    .debug .off-grid {
+      background: rgba(255, 0, 0, 0.1);
+    }
+
+    .debug-toggle-label {
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+      <table class="header" style="font-family: var(--font-family, 'JetBrains Mono', monospace);">
+        <tr>
+          <td colspan="2" rowspan="2" class="width-auto" style="text-align: left;">
+            <h1 class="width-auto">Luke Ivan</h1>
+          </td>
+        </tr>
+          <th>Updated</th>
+          <td class="width-min"><time style="white-space: pre;">2025-09-25</time></td>
+          <th>Version</th>
+          <td class="width-min">v0.0.1</td>
+        </tr>
+      </table>
+  <!-- Navigation -->
+  <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Contents</h2>
+    <ul class="incremental">
+      <li><a href="#about" id="toc-about">About</a></li>
+      <li><a href="#projects" id="toc-projects">Projects</a></li>
+      <li><a href="#contact" id="toc-contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <h2 id="about">About</h2>
+  <p>Weclome to my website. I'm an analyst in infrastructure development at a financial services firm in Toronto and a graduate in Computer Engineering at Queen's University in Kingston, Ontario.</p>
+  <p>I'm interested in backend development, computer vision, and machine learning. I'm Keen on retro computing and embedded systems. I mainly do dev work on my M1 Mac Air, and use Fedora 41 as my daily driver on my PC. I'm also an amateur homelabber, and run a proxmox server to host my NAS, Plex, and other projects.</p>
+  <p>On the side, I'm a half decent hockey player and runner. Sometimes I <a href="https://app.thestorygraph.com/profile/lukeivan26" target="_blank">read</a> too.</p>
+
+  <details>
+    <summary> More about this</summary>
+    <p>This is hosted off of an ARM64 assembly HTTP server on my raspberry pi. The source code is available <a href="https://github.com/LukeIvan" target="_blank">here</a>.</p>
+  </details>
+
+  <h2 id="projects">Couple Projects</h2>
+  <table>
+    <thead>
+      <tr>
+        <th class="width-auto">Project</th>
+        <th class="width-min">Status</th>
+        <th class="width-min">Repository</th>
+        <th class="width-min">Built with</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Cash - custom linux shell</td>
+        <td>In Progress</td>
+        <td><a href="https://github.com/LukeIvan/cash">Link</a></td>
+        <td>C, Make</td>
+      </tr>
+      <tr>
+        <td>Chaos-Based secure communication protocol simulation</td>
+        <td>Complete</td> 
+        <td><a href="https://github.com/LukeIvan/Chaos-Based-Secure-Communication">Link</a></td>
+        <td>Python, Numpy</td>
+      </tr>
+      <tr>
+        <td>PyTorch Computer Vision Projects</td>
+        <td>Complete</td>
+        <td><a href="https://github.com/LukeIvan/ELEC475-ComputerVision">Link</a></td>
+        <td>Python, PyTorch</td>
+      </tr>
+      <tr>
+        <td>Canadian Engineering Competition - Tumor Classification - 2nd Place</td>
+        <td>Complete</td>
+        <td><a href="https://github.com/LukeIvan/ELEC475-ComputerVision">Link</a></td>
+        <td>PyTorch, Streamlit</td>
+      </tr>
+      <tr>
+        <td>The program that serves this website</td>
+        <td>In Progress</td>
+        <td><a href="https://github.com/LukeIvan/ELEC475-ComputerVision">Link</a></td>
+        <td>Arm64 Assembly, libc. HTML CSS JS</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="contact" style="margin-bottom:0.5em;">Contact</h2>
+  <p style="margin-top:0; margin-bottom:0.5em;">Get in touch using the form below:</p>
+  <form id="contactForm" style="margin-top:0; margin-bottom:0;">
+    <label for="name" style="margin-bottom:0.2em; display:block;">Name:</label>
+    <input type="text" id="name" name="name" required style="margin-bottom:0.5em; display:block;">
+    <label for="email" style="margin-bottom:0.2em; display:block;">Your Email:</label>
+    <input type="email" id="email" name="email" required style="margin-bottom:0.5em; display:block;">
+    <label for="message" style="margin-bottom:0.2em; display:block;">Message:</label>
+    <textarea id="message" name="message" rows="5" required style="margin-bottom:0.5em; display:block;"></textarea>
+    <input type="submit" value="Send" style="margin-right:0.5em;">
+    <input type="reset" value="Reset">
+  </form>
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var name = encodeURIComponent(document.getElementById('name').value);
+      var email = encodeURIComponent(document.getElementById('email').value);
+      var message = encodeURIComponent(document.getElementById('message').value);
+
+      var subject = "Reaching out, " + name;
+      var body = "Greetings Luke, I'm " + name + "%0D%0A"
+               + "Email: " + email + "%0D%0A"
+               + "Message: " + message;
+
+      window.location.href = "mailto:lukeivan.2615@gmail.com"
+        + "?subject=" + subject
+        + "&body=" + body;
+    });
+  </script>
+
+  <hr>
+
+  <p><em>This page is based on <a href="https://github.com/owickstrom/the-monospace-web">The Monospace Web</a> by Oskar Wickström.</em></p>
+
+  <!-- Debug Grid -->
+  <div class="debug-grid"></div>
+
+  <script>
+    // Embedded JavaScript from the original library
+    function gridCellDimensions() {
+      const element = document.createElement("div");
+      element.style.position = "fixed";
+      element.style.height = "var(--line-height)";
+      element.style.width = "1ch";
+      document.body.appendChild(element);
+      const rect = element.getBoundingClientRect();
+      document.body.removeChild(element);
+      return { width: rect.width, height: rect.height };
+    }
+
+    function gridCellDimensions() {
+      const element = document.createElement("div");
+      element.style.position = "fixed";
+      element.style.height = "var(--line-height)";
+      element.style.width = "1ch";
+      document.body.appendChild(element);
+      const rect = element.getBoundingClientRect();
+      document.body.removeChild(element);
+      return { width: rect.width, height: rect.height };
+    }
+
+    function checkOffsets() {
+      const ignoredTagNames = new Set([
+        "THEAD",
+        "TBODY",
+        "TFOOT",
+        "TR",
+        "TD",
+        "TH",
+      ]);
+      const cell = gridCellDimensions();
+      const elements = document.querySelectorAll("body :not(.debug-grid, .debug-toggle)");
+      for (const element of elements) {
+        if (ignoredTagNames.has(element.tagName)) {
+          continue;
+        }
+        const rect = element.getBoundingClientRect();
+        if (rect.width === 0 && rect.height === 0) {
+          continue;
+        }
+        const top = rect.top + window.scrollY;
+        const offset = top % (cell.height / 2);
+        if(offset > 0) {
+          element.classList.add("off-grid");
+          console.error("Incorrect vertical offset for", element, "with remainder", top % cell.height, "when expecting divisible by", cell.height / 2);
+        } else {
+          element.classList.remove("off-grid");
+        }
+      }
+    }
+
+    const debugToggle = document.querySelector(".debug-toggle");
+    function onDebugToggle() {
+      document.body.classList.toggle("debug", debugToggle.checked);
+    }
+    debugToggle.addEventListener("change", onDebugToggle);
+    onDebugToggle();
+  </script>
+</body>
+</html>
