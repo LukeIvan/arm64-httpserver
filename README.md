@@ -9,6 +9,4 @@ as -o server.o server.s
 gcc -nostartfiles -o server server.o -lc
 ```
 
-All information in 'index.html' is public already, can be found here -> https://lukeivan.dev/
-
-HTML inspired by this project here -> https://github.com/owickstrom/the-monospace-web
+Running my personal website here -> https://lukeivan.dev/
